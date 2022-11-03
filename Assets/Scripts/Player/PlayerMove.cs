@@ -27,6 +27,9 @@ public class PlayerMove : MonoBehaviour
             if(Input.GetKeyDown(KeyCode.UpArrow)||Input.GetKeyDown(KeyCode.W)){
                 Jump();
             }
+            if(Input.GetKeyDown(KeyCode.DownArrow)||Input.GetKeyDown(KeyCode.S)){
+                Roll();
+            }
         }else{
             direction.y+=gravity*Time.deltaTime;
         }
@@ -58,7 +61,10 @@ public class PlayerMove : MonoBehaviour
         controller.Move(direction * Time.fixedDeltaTime);
     }
     private void Jump(){
-        charModel.GetComponent<Animator>().Play("jump");
+        charModel.GetComponent<Animator>().Play("Jump");
         direction.y=jumpForce;
+    }
+    private void Roll(){
+        charModel.GetComponent<Animator>().Play("roll");
     }
 }
