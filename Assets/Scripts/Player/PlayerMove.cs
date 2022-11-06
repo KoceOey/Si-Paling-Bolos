@@ -54,8 +54,16 @@ public class PlayerMove : MonoBehaviour
         }else if(desiredLane==2){
             targetPosition+=Vector3.right*laneDistance;
         }
-        transform.position=Vector3.Lerp(transform.position, targetPosition,80 * Time.fixedDeltaTime);
-    }
+        //transform.position=Vector3.Lerp(transform.position, targetPosition,80 * Time.fixedDeltaTime);
+        if(transform.position == targetPosition)
+            return;
+        Vector3 diff = targetPosition - transform.position;
+        Vector3 moveDir = diff.normalized * 25 * Time.deltaTime;
+        if(moveDir.sqrMagnitude < diff.sqrMagnitude)
+            controller.Move(moveDir);
+        else
+            controller.Move(diff);
+    }   
 
     private void FixedUpdate(){
         controller.Move(direction * Time.fixedDeltaTime);
