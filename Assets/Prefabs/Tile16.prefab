@@ -46,6 +46,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Car_2_Yellow
       objectReference: {fileID: 0}
+    - target: {fileID: 160038, guid: 1f4a686b41be99449a540690ab7a6785, type: 3}
+      propertyPath: m_TagString
+      value: Obstacle
+      objectReference: {fileID: 0}
     - target: {fileID: 475332, guid: 1f4a686b41be99449a540690ab7a6785, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -125,6 +129,10 @@ PrefabInstance:
     - target: {fileID: 162266, guid: 4306cd5466419674c91dc425c00e18db, type: 3}
       propertyPath: m_Name
       value: Car_5_Green
+      objectReference: {fileID: 0}
+    - target: {fileID: 162266, guid: 4306cd5466419674c91dc425c00e18db, type: 3}
+      propertyPath: m_TagString
+      value: Obstacle
       objectReference: {fileID: 0}
     - target: {fileID: 490478, guid: 4306cd5466419674c91dc425c00e18db, type: 3}
       propertyPath: m_RootOrder
@@ -297,6 +305,10 @@ PrefabInstance:
     - target: {fileID: 154144, guid: e5588eee4212a57479969d0bbe7c7216, type: 3}
       propertyPath: m_Name
       value: Truck_1_Purple
+      objectReference: {fileID: 0}
+    - target: {fileID: 154144, guid: e5588eee4212a57479969d0bbe7c7216, type: 3}
+      propertyPath: m_TagString
+      value: Obstacle
       objectReference: {fileID: 0}
     - target: {fileID: 432348, guid: e5588eee4212a57479969d0bbe7c7216, type: 3}
       propertyPath: m_RootOrder

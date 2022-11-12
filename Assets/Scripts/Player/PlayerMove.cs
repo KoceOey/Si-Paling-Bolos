@@ -7,7 +7,7 @@ public class PlayerMove : MonoBehaviour
     private CharacterController controller;
     private Vector3 direction;
     public float forwardSpeed;
-
+    public float maxSpeed;
     private int desiredLane = 1;
     public float laneDistance = 3;
     public float jumpForce;
@@ -20,6 +20,13 @@ public class PlayerMove : MonoBehaviour
 
     void Update()
     {
+        if(!PlayerManager.isGameStarted){
+            charModel.GetComponent<Animator>().Play("Idle");
+            return;
+        }
+        if(forwardSpeed<maxSpeed){
+            forwardSpeed += 0.2f * Time.deltaTime;
+        }
         direction.z = forwardSpeed;
         direction.y+=gravity*Time.deltaTime;
         if(controller.isGrounded){
@@ -66,6 +73,10 @@ public class PlayerMove : MonoBehaviour
     }   
 
     private void FixedUpdate(){
+        if(!PlayerManager.isGameStarted){
+            charModel.GetComponent<Animator>().Play("Idle");
+            return;
+        }
         controller.Move(direction * Time.fixedDeltaTime);
     }
     private void Jump(){
@@ -74,5 +85,10 @@ public class PlayerMove : MonoBehaviour
     }
     private void Roll(){
         charModel.GetComponent<Animator>().Play("roll");
+    }
+    private void OnControllerColliderHit(ControllerColliderHit hit){
+        if(hit.transform.tag=="Obstacle"){
+            PlayerManager.gameOver=true;
+        }
     }
 }
