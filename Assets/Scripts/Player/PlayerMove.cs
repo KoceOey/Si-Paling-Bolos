@@ -13,13 +13,18 @@ public class PlayerMove : MonoBehaviour
     public float jumpForce;
     public float gravity=-20;
     public GameObject charModel;
+    public static bool hit;
 
     void Start(){
+        hit=false;
         controller = GetComponent<CharacterController>();
     }
 
     void Update()
     {
+        if(hit){
+            StumbleBackwards();
+        }
         if(!PlayerManager.isGameStarted){
             charModel.GetComponent<Animator>().Play("Idle");
             return;
@@ -86,9 +91,12 @@ public class PlayerMove : MonoBehaviour
     private void Roll(){
         charModel.GetComponent<Animator>().Play("roll");
     }
-    private void OnControllerColliderHit(ControllerColliderHit hit){
-        if(hit.transform.tag=="Obstacle"){
-            PlayerManager.gameOver=true;
-        }
+    private void StumbleBackwards(){
+        charModel.GetComponent<Animator>().Play("Stumble Backwards");
     }
+    // private void OnControllerColliderHit(ControllerColliderHit hit){
+    //     if(hit.transform.tag=="Obstacle"){
+    //         PlayerManager.gameOver=true;
+    //     }
+    // }
 }
