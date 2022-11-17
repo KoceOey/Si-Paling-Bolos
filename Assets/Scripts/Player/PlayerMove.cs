@@ -13,16 +13,24 @@ public class PlayerMove : MonoBehaviour
     public float jumpForce;
     public float gravity=-20;
     public GameObject charModel;
-    public static bool hit;
+    public static bool sideHit;
+    public static int hp;
+    private int laneHistory;
 
     void Start(){
-        hit=false;
+        sideHit = false;
+        hp=0;
         controller = GetComponent<CharacterController>();
     }
 
     void Update()
     {
-        if(hit){
+        if(sideHit){
+            desiredLane = laneHistory;
+            sideHit = false;
+        }
+        if(hp >= 2){
+            forwardSpeed = 0;
             StumbleBackwards();
         }
         if(!PlayerManager.isGameStarted){
@@ -47,6 +55,7 @@ public class PlayerMove : MonoBehaviour
         }
         //kanan
         if(Input.GetKeyDown(KeyCode.RightArrow)||Input.GetKeyDown(KeyCode.D)){
+            laneHistory = desiredLane;
             desiredLane++;
             if(desiredLane==3){
                 desiredLane=2;
@@ -54,6 +63,7 @@ public class PlayerMove : MonoBehaviour
         }
         //kiri
         if(Input.GetKeyDown(KeyCode.LeftArrow)||Input.GetKeyDown(KeyCode.A)){
+            laneHistory = desiredLane;
             desiredLane--;
             if(desiredLane==-1){
                 desiredLane=0;
