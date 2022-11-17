@@ -13,13 +13,26 @@ public class PlayerMove : MonoBehaviour
     public float jumpForce;
     public float gravity=-20;
     public GameObject charModel;
+    public static bool sideHit;
+    public static int hp;
+    private int laneHistory;
 
     void Start(){
+        sideHit = false;
+        hp=0;
         controller = GetComponent<CharacterController>();
     }
 
     void Update()
     {
+        if(sideHit){
+            desiredLane = laneHistory;
+            sideHit = false;
+        }
+        if(hp >= 2){
+            forwardSpeed = 0;
+            StumbleBackwards();
+        }
         if(!PlayerManager.isGameStarted){
             charModel.GetComponent<Animator>().Play("Idle");
             return;
@@ -42,6 +55,7 @@ public class PlayerMove : MonoBehaviour
         }
         //kanan
         if(Input.GetKeyDown(KeyCode.RightArrow)||Input.GetKeyDown(KeyCode.D)){
+            laneHistory = desiredLane;
             desiredLane++;
             if(desiredLane==3){
                 desiredLane=2;
@@ -49,6 +63,7 @@ public class PlayerMove : MonoBehaviour
         }
         //kiri
         if(Input.GetKeyDown(KeyCode.LeftArrow)||Input.GetKeyDown(KeyCode.A)){
+            laneHistory = desiredLane;
             desiredLane--;
             if(desiredLane==-1){
                 desiredLane=0;
@@ -86,9 +101,12 @@ public class PlayerMove : MonoBehaviour
     private void Roll(){
         charModel.GetComponent<Animator>().Play("roll");
     }
-    private void OnControllerColliderHit(ControllerColliderHit hit){
-        if(hit.transform.tag=="Obstacle"){
-            PlayerManager.gameOver=true;
-        }
+    private void StumbleBackwards(){
+        charModel.GetComponent<Animator>().Play("Stumble Backwards");
     }
+    // private void OnControllerColliderHit(ControllerColliderHit hit){
+    //     if(hit.transform.tag=="Obstacle"){
+    //         PlayerManager.gameOver=true;
+    //     }
+    // }
 }
