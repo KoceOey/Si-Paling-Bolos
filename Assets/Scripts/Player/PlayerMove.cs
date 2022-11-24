@@ -31,7 +31,9 @@ public class PlayerMove : MonoBehaviour
         }
         if(hp >= 2){
             forwardSpeed = 0;
+            PlayerManager.isStart=false;
             StumbleBackwards();
+            Invoke("setGameOver",2);
         }
         if(!PlayerManager.isGameStarted){
             charModel.GetComponent<Animator>().Play("Idle");
@@ -86,7 +88,9 @@ public class PlayerMove : MonoBehaviour
         else
             controller.Move(diff);
     }   
-
+    private void setGameOver(){
+        PlayerManager.gameOver=true;
+    }
     private void FixedUpdate(){
         if(!PlayerManager.isGameStarted){
             charModel.GetComponent<Animator>().Play("Idle");
@@ -104,9 +108,4 @@ public class PlayerMove : MonoBehaviour
     private void StumbleBackwards(){
         charModel.GetComponent<Animator>().Play("Stumble Backwards");
     }
-    // private void OnControllerColliderHit(ControllerColliderHit hit){
-    //     if(hit.transform.tag=="Obstacle"){
-    //         PlayerManager.gameOver=true;
-    //     }
-    // }
 }
