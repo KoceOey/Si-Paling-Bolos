@@ -15,10 +15,12 @@ public class PlayerMove : MonoBehaviour
     public GameObject charModel;
     public static bool sideHit;
     public static int hp;
+    public static bool hit;
     private int laneHistory;
 
     void Start(){
         sideHit = false;
+        hit=false;
         hp=0;
         controller = GetComponent<CharacterController>();
     }
@@ -28,8 +30,15 @@ public class PlayerMove : MonoBehaviour
         if(sideHit){
             desiredLane = laneHistory;
             sideHit = false;
+            if(hp > 1){
+                forwardSpeed = 0;
+                PlayerManager.isStart=false;
+                StumbleSide();
+                Invoke("setGameOver",2);
+                return;
+            }
         }
-        if(hp >= 2){
+        if(hit){
             forwardSpeed = 0;
             PlayerManager.isStart=false;
             StumbleBackwards();
@@ -107,5 +116,8 @@ public class PlayerMove : MonoBehaviour
     }
     private void StumbleBackwards(){
         charModel.GetComponent<Animator>().Play("Stumble Backwards");
+    }
+    private void StumbleSide(){
+        charModel.GetComponent<Animator>().Play("hitSide");
     }
 }
