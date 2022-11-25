@@ -40,13 +40,14 @@ public class PlayerManager : MonoBehaviour
         }
         if(scoreCount>highScoreCount){
             highScoreCount=scoreCount;
+            PlayerPrefs.SetFloat("HighScore",Mathf.Round(highScoreCount));
         }
-        PlayerPrefs.SetFloat("HighScore",Mathf.Round(highScoreCount));
         PlayerPrefs.Save();
         scoreText.text=""+Mathf.Round(scoreCount);
         UpdateHighScore();
     }
     void UpdateHighScore(){
         highScoreText.text=""+PlayerPrefs.GetFloat("HighScore");
+        highScoreCount=PlayerPrefs.GetFloat("HighScore");
     }
 }
