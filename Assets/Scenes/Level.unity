@@ -852,6 +852,61 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 751332786}
   m_CullTransparentMesh: 1
+--- !u!1 &780753671
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 780753673}
+  - component: {fileID: 780753672}
+  m_Layer: 0
+  m_Name: PowerUpManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &780753672
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 780753671}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c3510f7bd3b64948bebca05f7d2ad38, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  powerUpPrefabs:
+  - {fileID: 85221157223556281, guid: 26cb16b8c986f3b43a38f9a10910d608, type: 3}
+  - {fileID: 2068382199490039077, guid: d1202556c1590b34ea0b5793e53ef532, type: 3}
+  powerUpSpawnRate: 2
+  playerTransform: {fileID: 1434452656}
+  xSpawn:
+  - 14.8
+  - 17.4
+  - 20
+  tileLength: 30
+  numberOfTiles: 5
+--- !u!4 &780753673
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 780753671}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.0127527, y: -7.419196, z: -42.755245}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &895680543
 GameObject:
   m_ObjectHideFlags: 0
@@ -1490,6 +1545,7 @@ MonoBehaviour:
   jumpForce: 12
   gravity: -20
   charModel: {fileID: 1434452655}
+  invincibleTimer: 0
   jumpSound: {fileID: 1434452661}
   gameOverSound: {fileID: 1434452662}
   startSound: {fileID: 1434452663}
