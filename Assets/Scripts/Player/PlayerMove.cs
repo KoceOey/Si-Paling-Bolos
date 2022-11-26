@@ -24,6 +24,9 @@ public class PlayerMove : MonoBehaviour
     private int jumpLeft = 0;
     public static bool invincible;
     public float invincibleTimer;
+    [SerializeField] private AudioSource jumpSound;
+    [SerializeField] private AudioSource gameOverSound;
+    [SerializeField] private AudioSource startSound;
 
     void Start(){
         sideHit = false;
@@ -45,6 +48,8 @@ public class PlayerMove : MonoBehaviour
                 forwardSpeed = 0;
                 PlayerManager.isStart=false;
                 StumbleSide();
+                gameOverSound.Play();
+                startSound.Stop();
                 Invoke("setGameOver",2);
                 return;
             }
@@ -55,6 +60,8 @@ public class PlayerMove : MonoBehaviour
             forwardSpeed = 0;
             PlayerManager.isStart=false;
             StumbleBackwards();
+            gameOverSound.Play();
+            startSound.Stop();
             Invoke("setGameOver",2);
         }
 
@@ -152,6 +159,7 @@ public class PlayerMove : MonoBehaviour
         controller.Move(direction * Time.fixedDeltaTime);
     }
     private void Jump(){
+        jumpSound.Play();
         charModel.GetComponent<Animator>().Play("Jump");
         direction.y=jumpForce;
     }
