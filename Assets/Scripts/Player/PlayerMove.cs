@@ -11,15 +11,25 @@ public class PlayerMove : MonoBehaviour
     private int desiredLane = 1;
     public float laneDistance = 3;
     public float jumpForce;
+    private float normalJumpForce = 12;
+    private float boostedJumpForce = 20;
+    public static bool boostSepatuSuper;
+    public static bool boostAnggurMerah;
     public float gravity=-20;
     public GameObject charModel;
     public static bool sideHit;
     public static int hp;
     public static bool hit;
     private int laneHistory;
+    private int jumpLeft = 0;
+    public static bool invincible;
+    public float invincibleTimer;
 
     void Start(){
         sideHit = false;
+        boostSepatuSuper = false;
+        boostAnggurMerah = false;
+        invincible = false;
         hit=false;
         hp=0;
         controller = GetComponent<CharacterController>();
@@ -27,6 +37,7 @@ public class PlayerMove : MonoBehaviour
 
     void Update()
     {
+        //kondisi nabrak samping
         if(sideHit){
             desiredLane = laneHistory;
             sideHit = false;
@@ -38,26 +49,59 @@ public class PlayerMove : MonoBehaviour
                 return;
             }
         }
+
+        //kondisi nabrak depan
         if(hit){
             forwardSpeed = 0;
             PlayerManager.isStart=false;
             StumbleBackwards();
             Invoke("setGameOver",2);
         }
+
         if(!PlayerManager.isGameStarted){
             charModel.GetComponent<Animator>().Play("Idle");
             return;
         }
+
         if(forwardSpeed<maxSpeed){
             forwardSpeed += 0.2f * Time.deltaTime;
         }
+
+        //kondisi power up sepatu super
+        if(boostSepatuSuper){
+            boostSepatuSuper = false;
+            jumpForce = boostedJumpForce;
+            jumpLeft = 5;
+        }
+
+        if(boostAnggurMerah){
+            boostAnggurMerah = false;
+            invincible = true;
+            invincibleTimer = 10;
+        }
+
+        if(invincible){
+            invincibleTimer -= Time.deltaTime;
+            if(invincibleTimer <= 0){
+                invincible = false;
+            }
+        }
+
         direction.z = forwardSpeed;
         direction.y+=gravity*Time.deltaTime;
+
+        //direction.y=-1 (cek apakah di player berada di tanah);
         if(controller.isGrounded){
-            //direction.y=-1;
+            //lompat
             if(Input.GetKeyDown(KeyCode.UpArrow)||Input.GetKeyDown(KeyCode.W)){
+                if(jumpLeft > 0){
+                    jumpLeft--;
+                }else{
+                    jumpForce = normalJumpForce;
+                }
                 Jump();
             }
+            //Roll
             if(Input.GetKeyDown(KeyCode.DownArrow)||Input.GetKeyDown(KeyCode.S)){
                 Roll();
             }

@@ -7,6 +7,10 @@ public class Collision : MonoBehaviour
     public GameObject charModel;
     private void OnTriggerEnter(Collider other){
         // PlayerManager.gameOver=true;
-        PlayerMove.hit =true;
+        if(PlayerMove.invincible){
+            Destroy(gameObject);
+        }else{
+            PlayerMove.hit =true;
+        }
     }
 }
