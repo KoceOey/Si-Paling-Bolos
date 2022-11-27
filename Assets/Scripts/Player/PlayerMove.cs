@@ -32,10 +32,11 @@ public class PlayerMove : MonoBehaviour
         sideHit = false;
         boostSepatuSuper = false;
         boostAnggurMerah = false;
-        invincible = false;
+        invincible = true;
         hit=false;
         hp=0;
         controller = GetComponent<CharacterController>();
+        Debug.Log(invincible);
     }
 
     void Update()
@@ -88,9 +89,11 @@ public class PlayerMove : MonoBehaviour
         }
 
         if(invincible){
+            transform.gameObject.tag = "PlayerInvincible";
             invincibleTimer -= Time.deltaTime;
             if(invincibleTimer <= 0){
                 invincible = false;
+                // transform.gameObject.tag = "Player";
             }
         }
 
