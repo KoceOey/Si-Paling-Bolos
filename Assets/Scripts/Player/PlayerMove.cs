@@ -24,6 +24,8 @@ public class PlayerMove : MonoBehaviour
     private int jumpLeft = 0;
     public static bool invincible;
     public float invincibleTimer;
+    private bool dying;
+    public float hptimer;
     [SerializeField] private AudioSource jumpSound;
     [SerializeField] private AudioSource gameOverSound;
     [SerializeField] private AudioSource startSound;
@@ -52,6 +54,18 @@ public class PlayerMove : MonoBehaviour
                 startSound.Stop();
                 Invoke("setGameOver",2);
                 return;
+            }else{
+                dying = true;
+                hptimer = 10;
+            }
+        }
+
+        //timer untuk nambah hp
+        if(dying){
+            hptimer -= Time.deltaTime;
+            if(hptimer <= 0){
+                dying = false;
+                hp -= 1;
             }
         }
 
@@ -97,56 +111,59 @@ public class PlayerMove : MonoBehaviour
         direction.z = forwardSpeed;
         direction.y+=gravity*Time.deltaTime;
 
-        //direction.y=-1 (cek apakah di player berada di tanah);
-        if(controller.isGrounded){
-            //lompat
-            if(Input.GetKeyDown(KeyCode.UpArrow)||Input.GetKeyDown(KeyCode.W)){
-                if(jumpLeft > 0){
-                    jumpLeft--;
-                }else{
-                    jumpForce = normalJumpForce;
+        //(cek apakah game masih berjalan)
+        if(PlayerManager.isStart){
+            //direction.y=-1 (cek apakah di player berada di tanah);
+            if(controller.isGrounded){
+                //lompat
+                if(Input.GetKeyDown(KeyCode.UpArrow)||Input.GetKeyDown(KeyCode.W)){
+                    if(jumpLeft > 0){
+                        jumpLeft--;
+                    }else{
+                        jumpForce = normalJumpForce;
+                    }
+                    Jump();
                 }
-                Jump();
+                //Roll
+                if(Input.GetKeyDown(KeyCode.DownArrow)||Input.GetKeyDown(KeyCode.S)){
+                    Roll();
+                }
+            }else{
+                direction.y+=gravity*Time.deltaTime;
             }
-            //Roll
-            if(Input.GetKeyDown(KeyCode.DownArrow)||Input.GetKeyDown(KeyCode.S)){
-                Roll();
+            //kanan
+            if(Input.GetKeyDown(KeyCode.RightArrow)||Input.GetKeyDown(KeyCode.D)){
+                laneHistory = desiredLane;
+                desiredLane++;
+                if(desiredLane==3){
+                    desiredLane=2;
+                }
             }
-        }else{
-            direction.y+=gravity*Time.deltaTime;
-        }
-        //kanan
-        if(Input.GetKeyDown(KeyCode.RightArrow)||Input.GetKeyDown(KeyCode.D)){
-            laneHistory = desiredLane;
-            desiredLane++;
-            if(desiredLane==3){
-                desiredLane=2;
+            //kiri
+            if(Input.GetKeyDown(KeyCode.LeftArrow)||Input.GetKeyDown(KeyCode.A)){
+                laneHistory = desiredLane;
+                desiredLane--;
+                if(desiredLane==-1){
+                    desiredLane=0;
+                }
             }
-        }
-        //kiri
-        if(Input.GetKeyDown(KeyCode.LeftArrow)||Input.GetKeyDown(KeyCode.A)){
-            laneHistory = desiredLane;
-            desiredLane--;
-            if(desiredLane==-1){
-                desiredLane=0;
+            Vector3 targetPosition = transform.position.z * transform.forward + transform.position.y * transform.up;
+            //max lane
+            if(desiredLane==0){
+                targetPosition+=Vector3.left * laneDistance;
+            }else if(desiredLane==2){
+                targetPosition+=Vector3.right*laneDistance;
             }
+            //transform.position=Vector3.Lerp(transform.position, targetPosition,80 * Time.fixedDeltaTime);
+            if(transform.position == targetPosition)
+                return;
+            Vector3 diff = targetPosition - transform.position;
+            Vector3 moveDir = diff.normalized * 25 * Time.deltaTime;
+            if(moveDir.sqrMagnitude < diff.sqrMagnitude)
+                controller.Move(moveDir);
+            else
+                controller.Move(diff);
         }
-        Vector3 targetPosition = transform.position.z * transform.forward + transform.position.y * transform.up;
-        //max lane
-        if(desiredLane==0){
-            targetPosition+=Vector3.left * laneDistance;
-        }else if(desiredLane==2){
-            targetPosition+=Vector3.right*laneDistance;
-        }
-        //transform.position=Vector3.Lerp(transform.position, targetPosition,80 * Time.fixedDeltaTime);
-        if(transform.position == targetPosition)
-            return;
-        Vector3 diff = targetPosition - transform.position;
-        Vector3 moveDir = diff.normalized * 25 * Time.deltaTime;
-        if(moveDir.sqrMagnitude < diff.sqrMagnitude)
-            controller.Move(moveDir);
-        else
-            controller.Move(diff);
     }   
     private void setGameOver(){
         PlayerManager.gameOver=true;
