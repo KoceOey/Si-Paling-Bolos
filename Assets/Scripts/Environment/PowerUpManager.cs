@@ -6,13 +6,13 @@ public class PowerUpManager : MonoBehaviour
 {
     public GameObject[] powerUpPrefabs = new GameObject[2];
     public static int tilePassed = 0;
-    public int powerUpSpawnRate = 5;
+    public int powerUpSpawnRate = 8;
     public Transform playerTransform;
     private List<GameObject> activePowerUp =  new List<GameObject>();
     public static float zSpawn = -39.1664f;
-    public float[] xSpawn = new float[3];
-    public float tileLength = 30;
-    public int numberOfTiles = 5;
+    private float[] xSpawn = new float[3];
+    private float tileLength = TileManager.tileLength;
+    private int numberOfTiles = TileManager.numberOfTiles;
 
     // Start is called before the first frame update
     void Start()
@@ -44,14 +44,14 @@ public class PowerUpManager : MonoBehaviour
     public void spawnSepatuSuper(){
         xSpawn = new float[3] {-1.5f,1f,3.5f};
         int randomLane = Random.Range(0,xSpawn.Length);
-        GameObject go = Instantiate(powerUpPrefabs[1], transform.forward * zSpawn + transform.right * xSpawn[randomLane] + transform.up, transform.rotation);
+        GameObject go = Instantiate(powerUpPrefabs[1], transform.forward * zSpawn + transform.right * xSpawn[randomLane] + transform.up, powerUpPrefabs[1].transform.rotation);
         activePowerUp.Add(go);
     }
 
     public void spawnAnggurMerah(){
         xSpawn = new float[3] {-2.4f,-0.1f,2.6f};
         int randomLane = Random.Range(0,xSpawn.Length);
-        GameObject go = Instantiate(powerUpPrefabs[0], transform.forward * zSpawn + transform.right * xSpawn[randomLane] + transform.up, transform.rotation);
+        GameObject go = Instantiate(powerUpPrefabs[0], transform.forward * zSpawn + transform.right * xSpawn[randomLane] + transform.up, powerUpPrefabs[0].transform.rotation);
         activePowerUp.Add(go);
     }
 

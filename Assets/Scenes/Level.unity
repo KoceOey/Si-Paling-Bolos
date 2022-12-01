@@ -884,14 +884,8 @@ MonoBehaviour:
   powerUpPrefabs:
   - {fileID: 85221157223556281, guid: 26cb16b8c986f3b43a38f9a10910d608, type: 3}
   - {fileID: 2068382199490039077, guid: d1202556c1590b34ea0b5793e53ef532, type: 3}
-  powerUpSpawnRate: 2
+  powerUpSpawnRate: 8
   playerTransform: {fileID: 1434452656}
-  xSpawn:
-  - 14.8
-  - 17.4
-  - 20
-  tileLength: 30
-  numberOfTiles: 5
 --- !u!4 &780753673
 Transform:
   m_ObjectHideFlags: 0
@@ -1546,6 +1540,7 @@ MonoBehaviour:
   gravity: -20
   charModel: {fileID: 1434452655}
   invincibleTimer: 0
+  hptimer: 0
   jumpSound: {fileID: 1434452661}
   gameOverSound: {fileID: 1434452662}
   startSound: {fileID: 1434452663}
@@ -2337,8 +2332,6 @@ MonoBehaviour:
   - {fileID: 6896793838731077827, guid: c6ff5fe431771084488376340ef77daf, type: 3}
   - {fileID: 3509466694241674750, guid: 9219c7a6c87e5d340afff4d24e46558b, type: 3}
   zSpawn: -41.1664
-  tileLength: 30
-  numberOfTiles: 5
   playerTransform: {fileID: 1434452656}
 --- !u!4 &1780608320
 Transform:

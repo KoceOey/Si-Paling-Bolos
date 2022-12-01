@@ -7,8 +7,8 @@ public class TileManager : MonoBehaviour
     public GameObject startingTiles;
     public GameObject[] tilePrefabs;
     public float zSpawn = -41.1664f;
-    public float tileLength = 30;
-    public int numberOfTiles = 5;
+    public static float tileLength = 30;
+    public static int numberOfTiles = 5;
     public Transform playerTransform;
     private List<GameObject> activeTiles =  new List<GameObject>();
 
