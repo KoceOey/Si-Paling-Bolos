@@ -26,6 +26,7 @@ public class PlayerMove : MonoBehaviour
     public float invincibleTimer;
     private bool dying;
     public float hptimer;
+    public static bool scoreLimit = false;
     [SerializeField] private AudioSource jumpSound;
     [SerializeField] private AudioSource gameOverSound;
     [SerializeField] private AudioSource startSound;
@@ -74,6 +75,13 @@ public class PlayerMove : MonoBehaviour
             forwardSpeed = 0;
             PlayerManager.isStart=false;
             StumbleBackwards();
+            gameOverSound.Play();
+            startSound.Stop();
+            Invoke("setGameOver",2);
+        }
+
+        //limit one day school
+        if(scoreLimit){
             gameOverSound.Play();
             startSound.Stop();
             Invoke("setGameOver",2);

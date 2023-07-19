@@ -16,6 +16,7 @@ public class PlayerManager : MonoBehaviour
     public float highScoreCount;
     public float pointsPerSecond;
     static public bool isStart=false;
+    public static float scoreLimit = 200;
     void Start()
     {
         gameOver=false;
@@ -41,6 +42,10 @@ public class PlayerManager : MonoBehaviour
         if(scoreCount>highScoreCount){
             highScoreCount=scoreCount;
             PlayerPrefs.SetFloat("HighScore",Mathf.Round(highScoreCount));
+        }
+        if(scoreCount>scoreLimit){
+            PlayerMove.scoreLimit = true;
+            gameOver = true;
         }
         PlayerPrefs.Save();
         scoreText.text=""+Mathf.Round(scoreCount);
