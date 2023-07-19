@@ -8,5 +8,6 @@ public class Events : MonoBehaviour
     }
     public void QuitGame(){
         Application.Quit();
+        Debug.Log("exit");
     }
 }
